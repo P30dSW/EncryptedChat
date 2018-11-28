@@ -18,7 +18,8 @@ function registerUser($_firstname,$_lastname,$_username,$_password,$_email){
     $insertStmt->execute();
     $insertStmt->close();
     $mysql_connection ->close();
-    return true;
+    //TODO: return UserId
+    return checkUserOrPasswordExists($_username,$_password);
 }}
 //only for register
 function checkUserOrEmailExists($_username,$_email){
@@ -92,4 +93,36 @@ function checkUserOrPasswordExists($_username,$_password){
         return [$uid, $logInIsTrue];
 }
 
+
+function changePassword($uid,$firstPw,$newPwHash){
+    $pw = "";
+    $mysql_connection = concection();
+    $passwordChanged = false;
+    if ($mysql_connection->connect_error) {
+        die("Connection failed: " . $mysql_connection->connect_error);
+        return false;
+        }else{
+    $checkPwQurey ="SELECT password FROM USERS WHERE uId = ?";
+    $checkPwStmt = $mysql_connection->prepare($checkPwQurey);
+  
+    $checkPwStmt->bind_param("s",$uid);
+    $checkPwStmt->execute();
+    $checkResult =  $checkPwStmt->get_result();
+    if ($checkResult->num_rows > 0) {
+        while($row = mysqli_fetch_assoc($checkResult)) {
+            $pw = $row["password"];
+            
+        }
+        if(password_verify($firstPw,$pw)){
+            //Second connection
+            $changePwQuery ="UPDATE USERS SET password = ? where uId = ?";
+            $changePwStmt =  $mysql_connection->prepare($changePwQuery);
+            $changePwStmt->bind_param("si",$newPwHash,$uid);
+            $changePwStmt->execute();
+            $passwordChanged = true;
+        }
+    }
+}
+return $passwordChanged;
+}
 ?>
