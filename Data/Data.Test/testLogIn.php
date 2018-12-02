@@ -5,15 +5,24 @@ $frstname = 'pedro';
 $lastname = 'winkler';
 $eMail = 'go@fuckyourself.com';
 $pswrd = 'pussy';
+$newPw = "newPassword01";
 //------creates User
+<<<<<<< HEAD
 $resultUser = registerUser($frstname,$lastname,$usrname,password_hash($pswrd, PASSWORD_DEFAULT) , $eMail );
 
+=======
+$prevHash = password_hash($pswrd, PASSWORD_DEFAULT);
+$uId = registerUser($frstname,$lastname,$usrname, $prevHash , $eMail )[0];
+echo $uId;
+echo "</br>" . $prevHash ."</br>";
+>>>>>>> 0ac012099f1b13e8d5dd1c034ddd22960c2dca71
 //------check ob den username oder password schon existiert
 $resultExists = checkUserOrEmailExists($usrname,$eMail);
 if($resultExists[0] == true && $resultExists[1] == true){
   $resultExistsBool = true;
 }
 //------check if user exists Tests returns Boolean
+<<<<<<< HEAD
 $result = checkUserOrPasswordExists($usrname ,$pswrd );
  foreach ($result as $key => $val) {
      echo $val;
@@ -50,3 +59,15 @@ $result = checkUserOrPasswordExists($usrname ,$pswrd );
   ?>
 </body>
 </html>
+=======
+// $result = checkUserOrPasswordExists($usrname ,$pswrd );
+//  foreach ($result as $key => $val) {
+//      echo $val;
+//   }
+
+  //------change password of existing user
+  echo "Test Case:changing Password";
+$pwChangeResult =  changePassword( $uId,$pswrd,password_hash($newPw, PASSWORD_DEFAULT));
+echo "</br>RESULT:" . $pwChangeResult;
+?>
+>>>>>>> 0ac012099f1b13e8d5dd1c034ddd22960c2dca71
