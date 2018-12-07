@@ -1,9 +1,47 @@
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </head>
 <body>
     <div>
+        <!--Navigation Bar with User Icon and Chat Link-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+             <!-- Index Page, Where the LogIn and Register Forms are -->
+                <a class="navbar-brand" href="index.php">Let's Chat!</a>
+                <!-- Toggler for responsive solutions -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <!-- Navigation selections -->
+                      <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav  mr-auto">
+                                
+                                <li class="nav-item">
+                                   <!-- Main Chat Page, only accessable when logged in -->
+                                  <a class="nav-link" href="#">Chat!</a>
+                                </li>
+                            </ul>
+                            <ul class="navbar-nav">
+                            <!-- User Dropdown with change Password and Log out -->
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img src="src/dummy_profile.png" width="30" height="30" class="d-inline-block align-top rounded-circle border border-dark" alt="">
+                                            [UserNameHERE]
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                            <a class="dropdown-item" href="#">Change Password</a>
+                                            <a class="dropdown-item" href="#">Log Out</a>
+                                        </div>
+                                    </li>
+                                   
+                            </ul>
+                        </div>
+              </nav>
+
+
+
         <!-- Username & Password, plus two buttons "Sign in" and "Register"
             (our site structure is simple enough that no further mechanics are necessary) -->
         <form>
