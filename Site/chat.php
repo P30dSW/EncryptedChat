@@ -12,9 +12,11 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="styles/chat.css"/>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="scripts/chat.js"></script>
 </head>
 <body>
 <div>
@@ -52,96 +54,109 @@
                 </div>
       </nav>
 </div>
-    <div class="jumbotron">
-<h1 class="text-center">Let's Chat!</h1>
-<p class="lead text-center">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <p class="text-center"><a class="btn btn-lg btn-success btn " role="button" data-target="#SignInMdl" data-toggle="modal" data-backdrop="static" data-keyboard="false">Sign up</a></p>
-        <p class="text-center"><a class="btn btn-lg btn-success btn " role="button"  data-target="#LogInMdl" data-toggle="modal" data-backdrop="static" data-keyboard="false">Log In</a></p>
-    </div>
-    
-          <h2 class="text-center">Heading</h2> 
-          <p class="text-center">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p class="text-center"><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
-    
+ <!-- chat layout reference: https://bootsnipp.com/snippets/featured/message-chat-box -->
+<div class="row">
+<div class=" userList container col-md-4 border border-dark">
+<?php
+//Set Userlist here
+$userListJSON = "[{\"uId\":1,\"userName\":\"testUser01\",\"profileSrc\":\"src/dummy_2.jpeg\"},{\"uId\":2,\"userName\":\"testUser02\",\"profileSrc\":\"src/dummy_profile.png\"},{\"uId\":3,\"userName\":\"testUser03\",\"profileSrc\":\"src/dummy_profile.png\"}]";
 
-<!-- Login in Sign In Modals -->
- <div class="modal fade" id="SignInMdl" tabindex="-1" role="dialog" aria-labelledby="singInLbl" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="singInLbl">Sign In</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <!-- TODO: Action and Method -->
-        <form>
-        <!-- TODO: add verification patters -->
-        <div class="form-group">
-        <label for="fstNameInputSignIn">First Name</label>
-        <input id="fstNameInputSignIn"class="form-control" type="text" placeholder="First Name">
-        </div>
-        <div class="form-group">
-        <label for="lstnmInputSignIn">Last Name</label>
-        <input id="lstnmInputSignIn"class="form-control" type="text" placeholder="Last Name">
-        </div>
-        <div class="form-group">
-        <label for="usrnmInputSignIn">Username</label>
-        <input id="usrnmInputSignIn"class="form-control" type="text" placeholder="Username">
-        </div>
-        <div class="form-group">
+foreach (json_decode($userListJSON) as $list) {
 
-        <label for="emailInputSignIn">Email address</label>
-        <input type="email" class="form-control" id="emailInputSignIn" placeholder="name@example.com">
-        </div>
-        <div class="form-group">
-        <label for="passwordInputSignIn">Password</label>
-        <input type="password" class="form-control" id="passwordInputSignIn" placeholder="Password">
-        </div>
-        <div class="form-group">
-    <label for="userProfileInputSignIn">User Profile</label>
-    <input type="file" class="form-control-file" id="userProfileInputSignIn">
-  </div>
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button"  type="submit" class="btn btn-primary">Sign In</button>
-      </div>
-      </form>
-    </div>
-  </div>
+    ?>
+    
+    <div class="users card border border-grey rounded mt-1 md-1 m-1" uId="<?php echo $list->{'uId'}?>" userName="<?php echo $list->{'userName'}?>">
+   
+        <div class="d-flex text-dark">
+    
+        <img class="rounded-circle border border-dark mt-1 md-1 m-1" src="<?php echo $list->{'profileSrc'} ?>" height="50" width="50" />
+        <p><?php echo $list->{'userName'}; ?></p>
+
 </div>
-<div class="modal fade" id="LogInMdl" tabindex="-1" role="dialog" aria-labelledby="logInLbl" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="logInLbl">Log In</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- TODO: Action and Method -->
-        <form>
-        <!-- TODO: add verification patters -->
-        <div class="form-group">
-        <label for="usrnmInputLogIn">Username</label>
-        <input id="usrnmInputLogIn"class="form-control" type="text" placeholder="Username">
+        
+</div>
+
+
+    <?php
+}
+?>
+
+</div>
+<div class="container col-md-8 border border-dark">
+<div class="mesgs">
+          <div class="msg_history ">
+          
+          <div class="sent_msg">
+                <p>BOI</p>
+            </div>
+            
+            
+            
+              <div class="received_msg">
+                
+                  <p>Test which is a new approach to have all
+                    solutions</br> idjsidjvisjvsid</br>dcjisdcisjcisjdc</p>
+              
+            </div>
+        
+       
+              <div class="received_msg">
+                
+                  <p>Test which is a new approach to have all
+                    solutions</br> idjsidjvisjvsid</br>dcjisdcisjcisjdc</p>
+              
+            </div>
+            
+        
+        
+              <div class="received_msg">
+                
+                  <p>Test which is a new approach to have all
+                    solutions</br> idjsidjvisjvsid</br>dcjisdcisjcisjdc</p>
+              
+            </div>
+            
+        
+        
+              <div class="received_msg">
+                
+                  <p>Test which is a new approach to have all
+                    solutions</br> idjsidjvisjvsid</br>dcjisdcisjcisjdc</p>
+              
+            </div>
+            
+        
+        
+              <div class="received_msg">
+                
+                  <p>Test which is a new approach to have all
+                    solutions</br> idjsidjvisjvsid</br>dcjisdcisjcisjdc</p>
+              
+            </div>
+            
+        
+        
+              <div class="received_msg">
+                
+                  <p>Test which is a new approach to have all
+                    solutions</br> idjsidjvisjvsid</br>dcjisdcisjcisjdc</p>
+              
+            
+            
         </div>
-        <div class="form-group">
-        <label for="passwordInputLogIn">Password</label>
-        <input type="password" class="form-control" id="passwordInputLogIn" placeholder="Password">
+        <div class="sent_msg">
+                <p>Wut?</p>
+            </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button"  type="submit" class="btn btn-primary">Log In</button>
-      </div>
-      </form>
-    </div>
-  </div>
+        <div class="typeMsg">
+            <div class="inputMsg">
+              <input type="text" placeholder="Type a message" />
+              <button class="sendMsgBtn btn align-middle" type="button">Send!</button>
+            </div>
+          </div>
+</div>
+
+
 </div>
 <div class="modal fade" id="pswdChangeMdl" tabindex="-1" role="dialog" aria-labelledby="changepswdLbl" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -176,6 +191,5 @@
 <footer class="footer">
         <p calss="text-center" >&copy; GIBM 2018</p>
 </footer>
-
 </body>
 </html>
