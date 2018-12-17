@@ -1,7 +1,9 @@
 <?php
-//check for session and userId
+//TODO: check for session and userId
 
-
+//current userId 
+//$currentUid = $_SESSION['uId'];
+$currentUid = "6";
 //All includes
 include("../Data/messageManager.php");
 //gets all headers
@@ -9,21 +11,33 @@ $headers=array();
 foreach (getallheaders() as $name => $value) {
     $headers[$name] = $value;
 }
-
-switch ($headers['FUNCTION']) {
-    case "SEND_MESSAGE":
-        
-        $res = createMessage('6',$headers['VAL01'],$headers['VAL02']);
-        var_dump($res);
-        break;
-
-        case "GET_MESSAGES":
-        $res = getMessage('6',$headers['VAL01']);
-        echo json_encode(array_filter($res));
-        break;
+if(isset($headers['FUNCTION'])){
+    switch ($headers['FUNCTION']) {
+        case "SEND_MESSAGE":
+            
+            $res = createMessage($currentUid,$headers['VAL01'],$headers['VAL02']);
+            echo $res;
+            break;
     
-    default:
-        echo "ERROR";
-        break;
+            case "GET_MESSAGES":
+            $res = getMessage($currentUid,$headers['VAL01']);
+            echo json_encode(array_filter($res));
+            break;
+    
+            case "DELETE_MESSAGE":
+            $res = deleteMessage($currentUid,$headers['VAL01']);
+            echo $res;
+            break;
+    
+            case "CHANGE_MESSAGE":
+            $res = changeMessage($currentUid,$headers['VAL01'],$headers['VAL02']);
+            echo $res;
+            break;
+        
+            default:
+            echo "ERROR: NO VALID FUNCTION SELECTED";
+            break;
+    }
 }
+
 ?>

@@ -56,10 +56,10 @@
 </div>
  <!-- chat layout reference: https://bootsnipp.com/snippets/featured/message-chat-box -->
 <div class="row">
-<div class=" userList container col-md-4 border border-dark">
+<div class=" userList container col-md-4 border border-dark rounded">
 <?php
 //Set Userlist here
-$userListJSON = "[{\"uId\":1,\"userName\":\"testUser01\",\"profileSrc\":\"src/dummy_2.jpeg\"},{\"uId\":2,\"userName\":\"testUser02\",\"profileSrc\":\"src/dummy_profile.png\"},{\"uId\":3,\"userName\":\"testUser03\",\"profileSrc\":\"src/dummy_profile.png\"}]";
+$userListJSON = "[{\"uId\":1,\"userName\":\"testUser01\",\"profileSrc\":\"src/dummy_2.jpeg\"},{\"uId\":2,\"userName\":\"testUser02\",\"profileSrc\":\"src/dummy_profile.png\"},{\"uId\":3,\"userName\":\"testUser03\",\"profileSrc\":\"src/dummy_profile.png\"},{\"uId\":4,\"userName\":\"testUser04\",\"profileSrc\":\"src/dummy_profile.png\"},{\"uId\":5,\"userName\":\"testUser05\",\"profileSrc\":\"src/dummy_profile.png\"}]";
 
 foreach (json_decode($userListJSON) as $list) {
 
@@ -82,7 +82,7 @@ foreach (json_decode($userListJSON) as $list) {
 ?>
 
 </div>
-<div class="container col-md-8 border border-dark">
+<div class="container col-md-8 border border-dark rounded">
 <div class="mesgs">
           <div class="msg_history ">
           
@@ -170,7 +170,7 @@ foreach (json_decode($userListJSON) as $list) {
       <div class="modal-body">
         <!-- TODO: Action and Method -->
         <form>
-        <!-- TODO: add verification patters -->
+        <!-- TODO: add verification patterns -->
         <div class="form-group">
         <label for="currentPswdChangeInput">Current Password</label>
         <input type="password" class="form-control" id="currentpswdChangeInput" placeholder="Current Password">

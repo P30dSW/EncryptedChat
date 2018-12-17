@@ -26,4 +26,8 @@ if($resultExists[0] == true && $resultExists[1] == true){
   echo "Test Case:changing Password";
 $pwChangeResult =  changePassword( $uId,$pswrd,password_hash($newPw, PASSWORD_DEFAULT));
 echo "</br>RESULT:" . $pwChangeResult;
+
+//------change username
+$res = changeUserName(6,"DamnLongNeck");
+echo $res;
 ?>

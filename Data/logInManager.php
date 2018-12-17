@@ -4,7 +4,7 @@
 include("dbConnector.php");
 
 //Register Method (does NOT Hash the password!!!!)
-function registerUser($_firstname,$_lastname,$_username,$_password,$_email){
+function registerUser($_firstname,$_lastname,$_username,$_password,$_email,$_profileImg){
     //define Connection
     $mysql_connection = concection();
     if ($mysql_connection->connect_error) {
@@ -12,6 +12,7 @@ function registerUser($_firstname,$_lastname,$_username,$_password,$_email){
         return false;
         }else{
     //setUp Insert Query
+    $imgName = addProfilePicture($_profileImg);
     $insertQuery = "INSERT INTO users (firstName, lastName, userName, eMail, password ) values (?, ?, ?, ?, ?)";
     $insertStmt = $mysql_connection->prepare($insertQuery);
     $insertStmt->bind_param("sssss", $_firstname, $_lastname, $_username, $_email,$_password);
@@ -124,5 +125,43 @@ function changePassword($uid,$firstPw,$newPwHash){
     }
 }
 return $passwordChanged;
+}
+
+function changeUserName($uid,$newUsername){
+    
+    $userNameChanged = false;
+    $mysql_connection = concection();
+    if ($mysql_connection->connect_error) {
+        die("Connection failed: " . $mysql_connection->connect_error);
+        return false;
+        }else{
+            //Query
+            $changeUnQuery = "UPDATE USERS SET userName = ? where uId = ?";
+            $changeUnStmt =  $mysql_connection->prepare($changeUnQuery);
+            $changeUnStmt->bind_param("si",$newUsername,$uid);
+            $changeUnStmt->execute();
+            $userNameChanged = true;
+        }
+        return $userNameChanged;
+}
+
+function addProfilePicture($img_file){
+    //TODO: Implement method
+
+    $profilePicName = "";
+    //check fileType
+    $fileExt = explode('.',$img_file['name']);
+    $fileAcExt = strtolower(end($fileExt));
+    $allowed = array('jpg','jpeg','png');
+    // 
+    //generate uid
+    if(in_array($fileAcExt,$allowed)){
+        $newImgName = uniqid('',true);
+        $newDicretory = "../src/Profile_Pictures/" . $newImgName . "." . $fileAcExt;
+        move_uploaded_file($img_file['tmp_name'],$newDicretory);
+        $profilePicName = $newImgName . "." . $fileAcExt;
+    }
+    
+    return $profilePicName;
 }
 ?>
