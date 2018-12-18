@@ -12,10 +12,19 @@ function registerUser($_firstname,$_lastname,$_username,$_password,$_email,$_pro
         return false;
         }else{
     //setUp Insert Query
-    $imgName = addProfilePicture($_profileImg);
-    $insertQuery = "INSERT INTO users (firstName, lastName, userName, eMail, password ) values (?, ?, ?, ?, ?)";
-    $insertStmt = $mysql_connection->prepare($insertQuery);
-    $insertStmt->bind_param("sssss", $_firstname, $_lastname, $_username, $_email,$_password);
+    $insertQuery = "";
+    $insertStmt = null;
+    if($_profileImg != null){
+        $imgName = addProfilePicture($_profileImg);
+        $insertQuery = "INSERT INTO users (firstName, lastName, userName, eMail, password ) values (?, ?, ?, ?, ?)";
+        $insertStmt = $mysql_connection->prepare($insertQuery);
+        $insertStmt->bind_param("ssssss", $_firstname, $_lastname, $_username, $_email,$_password,$imgName);
+    }else{
+        $insertQuery = "INSERT INTO users (firstName, lastName, userName, eMail, password,profilePicName ) values (?, ?, ?, ?, ?)";
+        $insertStmt = $mysql_connection->prepare($insertQuery);
+        $insertStmt->bind_param("ssssss", $_firstname, $_lastname, $_username, $_email,$_password);
+    }
+    
     $insertStmt->execute();
     $insertStmt->close();
     $mysql_connection ->close();

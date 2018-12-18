@@ -1,6 +1,6 @@
 <?php
 //TODO: check for session and userId
-
+//TODO: add acript and sql injection protection
 //current userId 
 //$currentUid = $_SESSION['uId'];
 $currentUid = "6";

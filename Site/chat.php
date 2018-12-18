@@ -75,8 +75,6 @@ foreach (json_decode($userListJSON) as $list) {
 </div>
         
 </div>
-
-
     <?php
 }
 ?>
