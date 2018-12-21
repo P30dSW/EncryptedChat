@@ -1,12 +1,23 @@
 <?php
-
-//check for POST data
-//case 1: Login
-//case 2: Registration
-
-//if no POST data, it's just the main login page
-//include("login.html");
-
+session_start();
+session_regenerate_id(true);
+include("../Data/dbConnector.php");
+include("../Data/logInManager.php");
+include("../Data/userManager.php");
+//POST-MANAGER
+if(isset($_POST['submit'])){
+  echo $_POST['submit'];
+  switch($_POST['submit']) {
+    case 'Change Password':
+    //TODO:Check for injection
+    //...
+    break;
+    case 'Change Username':
+    //TODO: check for injection
+    //...
+    break;
+  }
+}
 ?>
 <html>
 <head>
@@ -34,23 +45,44 @@
                         
                         <li class="nav-item">
                            <!-- Main Chat Page, only accessable when logged in -->
-                          <a class="nav-link" href="chat.php">Chat!</a>
+                           <?php 
+                           if(isset($_SESSION['IsLogIn'])){
+                             if($_SESSION['IsLogIn'] == true){
+                               ?> 
+                               <a class="nav-link" href="chat.php">Chat!</a>
+                               <?php
+                             }
+                           }
+                           
+                           
+                           ?>
+                          
                         </li>
                     </ul>
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav" >
                     <!-- User Dropdown with change Password and Log out -->
+                    <?php 
+                           if(isset($_SESSION['IsLogIn'])){
+                             if($_SESSION['IsLogIn'] == true){
+                               ?> 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="UserDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="src/dummy_profile.png" width="30" height="30" class="d-inline-block align-top rounded-circle border border-dark" alt="">
-                                    [UserNameHERE]
+                                    <img src="../src/Profile_Pictures/<?php echo getImageNameFromUid($_SESSION['uId']) ?>" width="30" height="30" class="d-inline-block align-top rounded-circle border border-dark" alt="">
+                                    <?php echo $_SESSION['userName'] ?>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="UserDropdownMenuLink">
                                     <a class="dropdown-item" href="#" data-target="#pswdChangeMdl" data-toggle="modal" data-backdrop="static" data-keyboard="false">Change Password</a>
+                                    <a class="dropdown-item" href="#" data-target="#changeusrnameMdl" data-toggle="modal" data-backdrop="static" data-keyboard="false">Change Username</a>
                                     <a class="dropdown-item" href="#">Log Out</a>
                                 </div>
                             </li>
+                            <?php
+                             }
+                           }
+                           ?>
                            
                     </ul>
+                
                 </div>
       </nav>
 </div>
@@ -85,7 +117,13 @@ foreach (json_decode($userListJSON) as $list) {
           <div class="msg_history ">
           
           <div class="sent_msg">
-                <p>BOI</p>
+                <p>BOI
+                </br>
+                <small><i>18.12.18 08:00 </i></small>
+                </br>
+                <button id="changeMessageBtn" type="button" class="btn btn-secondary btn-sm rounded-circle" href="#" data-target="#editMessageMdl" data-toggle="modal" data-backdrop="static" data-keyboard="false">✏</button>
+                <!-- TODO: calls a ajay js function -->
+                <button id="deleteMessageBtn" type="button" class="btn btn-secondary btn-sm rounded-circle">🗑</button></p>
             </div>
             
             
@@ -144,7 +182,8 @@ foreach (json_decode($userListJSON) as $list) {
         </div>
         <div class="sent_msg">
                 <p>Wut?</p>
-            </div>
+        
+        </div>
         </div>
         <div class="typeMsg">
             <div class="inputMsg">
@@ -186,6 +225,62 @@ foreach (json_decode($userListJSON) as $list) {
     </div>
   </div>
 </div>
+<!-- change unsername modal  -->
+<div class="modal fade" id="changeusrnameMdl" tabindex="-1" role="dialog" aria-labelledby="changeusrnameLbl" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="changeusrnameLbl">Change Username</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- TODO: Action and Method -->
+        <form>
+        <!-- TODO: add verification patterns -->
+        <div class="form-group">
+        <label for=newUseranmeInput">New Username</label>
+        <input type="text" class="form-control" id="newUseranmeInput" placeholder="New Username">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button"  type="submit" class="btn btn-primary">Change Username</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- edit message Modal
+TODO: goes through js. adds the mId in the modal attributes -->
+<div class="modal fade" id="editMessageMdl" tabindex="-1" role="dialog" aria-labelledby="editMsgLbl" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editMsgLbl">Edit Message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- TODO: goes through ajax -->
+        <form>
+        <div class="form-group">
+        <label for="editMessageInput">New Message</label>
+        <textarea class="form-control" id="editMessageInput" rows="3"></textarea>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button"  type="submit" class="btn btn-primary">Edit Message</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <footer class="footer">
         <p calss="text-center" >&copy; GIBM 2018</p>
 </footer>

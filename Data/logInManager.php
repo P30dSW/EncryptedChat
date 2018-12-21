@@ -1,7 +1,6 @@
 <?php
 
 //dbConnector
-include("dbConnector.php");
 
 //Register Method (does NOT Hash the password!!!!)
 function registerUser($_firstname,$_lastname,$_username,$_password,$_email,$_profileImg){
@@ -30,7 +29,8 @@ function registerUser($_firstname,$_lastname,$_username,$_password,$_email,$_pro
     $insertStmt->close();
     $mysql_connection ->close();
     //TODO: return UserId
-    return checkUserOrPasswordExists($_username,$_password);
+    return checkUserOrPasswordExistsHashed($_username,$_password);
+    //return true;
 }}
 //only for register
 function checkUserOrEmailExists($_username,$_email){
@@ -89,11 +89,45 @@ function checkUserOrPasswordExists($_username,$_password){
             //see if the user corresponds with the parameter
             if ($result->num_rows > 0) {
                
-                while($row = mysqli_fetch_assoc($result)) {
+                while($row = $result->fetch_array(MYSQLI_ASSOC)) {
                     $pw = $row["password"];
                     $uid = $row["uId"];
                 }
                 if(password_verify($_password,$pw)){
+                    $logInIsTrue = true;
+                   
+                }
+            }
+            $checkStmt->close();
+            $mysql_connection ->close();
+        }
+        return [$uid, $logInIsTrue];
+}
+function checkUserOrPasswordExistsHashed($_username,$_password){
+    $mysql_connection = concection();
+    $logInIsTrue = false;
+    $pw = "";
+    $uid = "NOUID";
+    if ($mysql_connection->connect_error) {
+        die("Connection failed: " . $mysql_connection->connect_error);
+        return false;
+        }else{
+            //checkquery wird erstellt
+            $checkQuery = "SELECT password, uId from users where userName = ?";
+            $checkStmt = $mysql_connection->prepare($checkQuery);
+		    //binding usercheck and executing it
+            $checkStmt->bind_param("s",$_username);
+            $checkStmt->execute();
+            //getting result
+            $result = $checkStmt->get_result();
+            //see if the user corresponds with the parameter
+            if ($result->num_rows > 0) {
+               
+                while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+                    $pw = $row["password"];
+                    $uid = $row["uId"];
+                }
+                if($_password == $pw){
                     $logInIsTrue = true;
                    
                 }
