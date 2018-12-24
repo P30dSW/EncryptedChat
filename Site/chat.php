@@ -8,6 +8,10 @@ include("../Data/userManager.php");
 if(isset($_POST['submit'])){
   echo $_POST['submit'];
   switch($_POST['submit']) {
+    case 'Log Out':
+    session_destroy();
+    header("Location: index.php");
+    break;
     case 'Change Password':
     //TODO:Check for injection
     //...
@@ -18,16 +22,18 @@ if(isset($_POST['submit'])){
     break;
   }
 }
+
+//checks if there valid is a session active
+
+                           if(isset($_SESSION['IsLogIn'])){
+                             if($_SESSION['IsLogIn'] == true){
+                               
 ?>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="styles/chat.css"/>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-<script src="scripts/chat.js"></script>
 </head>
 <body>
 <div>
@@ -67,13 +73,15 @@ if(isset($_POST['submit'])){
                                ?> 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="UserDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="../src/Profile_Pictures/<?php echo getImageNameFromUid($_SESSION['uId']) ?>" width="30" height="30" class="d-inline-block align-top rounded-circle border border-dark" alt="">
+                                    <img src="../Image/Profile_Pictures/<?php echo getImageNameFromUid($_SESSION['uId']) ?>" width="30" height="30" class="d-inline-block align-top rounded-circle border border-dark" alt="">
                                     <?php echo $_SESSION['userName'] ?>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="UserDropdownMenuLink">
                                     <a class="dropdown-item" href="#" data-target="#pswdChangeMdl" data-toggle="modal" data-backdrop="static" data-keyboard="false">Change Password</a>
                                     <a class="dropdown-item" href="#" data-target="#changeusrnameMdl" data-toggle="modal" data-backdrop="static" data-keyboard="false">Change Username</a>
-                                    <a class="dropdown-item" href="#">Log Out</a>
+                                    <form atrcion="" Method="POST">
+                                    <input type="submit" value="Log Out" name="submit" class="dropdown-item">
+                                    </form>
                                 </div>
                             </li>
                             <?php
@@ -91,23 +99,24 @@ if(isset($_POST['submit'])){
 <div class=" userList container col-md-4 border border-dark rounded">
 <?php
 //Set Userlist here
-$userListJSON = "[{\"uId\":1,\"userName\":\"testUser01\",\"profileSrc\":\"src/dummy_2.jpeg\"},{\"uId\":2,\"userName\":\"testUser02\",\"profileSrc\":\"src/dummy_profile.png\"},{\"uId\":3,\"userName\":\"testUser03\",\"profileSrc\":\"src/dummy_profile.png\"},{\"uId\":4,\"userName\":\"testUser04\",\"profileSrc\":\"src/dummy_profile.png\"},{\"uId\":5,\"userName\":\"testUser05\",\"profileSrc\":\"src/dummy_profile.png\"}]";
+$userListJSON = "[{\"uId\":1,\"userName\":\"testUser01\",\"profileSrc\":\"img/dummy_2.jpeg\"},{\"uId\":2,\"userName\":\"testUser02\",\"profileSrc\":\"img/dummy_profile.png\"},{\"uId\":3,\"userName\":\"testUser03\",\"profileSrc\":\"img/dummy_profile.png\"},{\"uId\":4,\"userName\":\"testUser04\",\"profileSrc\":\"img/dummy_profile.png\"},{\"uId\":5,\"userName\":\"testUser05\",\"profileSrc\":\"img/dummy_profile.png\"}]";
+$userList = getListOfAllUsers();
+//removes current user
 
-foreach (json_decode($userListJSON) as $list) {
-
+foreach ($userList as $user) {
+if($user['uId'] != $_SESSION['uId']){
     ?>
-    
-    <div class="users card border border-grey rounded mt-1 md-1 m-1" uId="<?php echo $list->{'uId'}?>" userName="<?php echo $list->{'userName'}?>">
+    <div class="users card border border-grey rounded mt-1 md-1 m-1" uId="<?php echo $user['uId']?>" userName="<?php echo $user['userName']?>">
    
         <div class="d-flex text-dark">
     
-        <img class="rounded-circle border border-dark mt-1 md-1 m-1" src="<?php echo $list->{'profileSrc'} ?>" height="50" width="50" />
-        <p><?php echo $list->{'userName'}; ?></p>
-
+        <img class="rounded-circle border border-dark mt-1 md-1 m-1" src="../Image/Profile_Pictures/<?php echo $user['profilePicName'] ?>" height="50" width="50" />
+        <p><?php echo $user['userName']; ?></p>
 </div>
         
 </div>
     <?php
+}
 }
 ?>
 
@@ -119,7 +128,7 @@ foreach (json_decode($userListJSON) as $list) {
           <div class="sent_msg">
                 <p>BOI
                 </br>
-                <small><i>18.12.18 08:00 </i></small>
+                <small><i>18.12.18 08:00</i></small>
                 </br>
                 <button id="changeMessageBtn" type="button" class="btn btn-secondary btn-sm rounded-circle" href="#" data-target="#editMessageMdl" data-toggle="modal" data-backdrop="static" data-keyboard="false">✏</button>
                 <!-- TODO: calls a ajay js function -->
@@ -280,9 +289,21 @@ TODO: goes through js. adds the mId in the modal attributes -->
     </div>
   </div>
 </div>
-
+</div>
 <footer class="footer">
         <p calss="text-center" >&copy; GIBM 2018</p>
 </footer>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="scripts/chat.js"></script>
 </body>
 </html>
+<?php
+                             }else{
+                              header("Location: index.php");
+                             }
+
+                            }else{
+                              header("Location: index.php");
+                            }?>

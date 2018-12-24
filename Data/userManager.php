@@ -10,7 +10,7 @@ if ($mysql_connection->connect_error) {
     return false;
     }else{
     //setUp Insert Query
-    $usersQuery = "SELECT uId,userName FROM users;";
+    $usersQuery = "SELECT uId,userName,profilePicName FROM users;";
 
     $userStmt = $mysql_connection->prepare($usersQuery);
     $userStmt->execute();
@@ -21,6 +21,7 @@ if ($mysql_connection->connect_error) {
         
         $user['uId'] = $row['uId'];
         $user['userName'] = $row['userName'];
+        $user['profilePicName'] = $row['profilePicName'];
         array_push($usrList,$user);
     }
 }

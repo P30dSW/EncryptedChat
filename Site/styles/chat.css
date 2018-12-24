@@ -1,5 +1,9 @@
-body, html, .container-fluid {
+body, html {
     height: 100%;
+}
+.dropdown-menu {
+  right: 0 !important;
+  left: auto !important;
 }
   .row { 
       margin: 0; 
@@ -37,9 +41,8 @@ body, html, .container-fluid {
   }
 
 .userList {
-height: auto; 
+height:  516px; 
 overflow-y: auto;
-
 }
 
 .sent_msg {
@@ -77,3 +80,4 @@ overflow-y: auto;
     cursor: pointer !important;
 
    }
+ 
