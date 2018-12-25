@@ -4,24 +4,59 @@ session_regenerate_id(true);
 include("../Data/dbConnector.php");
 include("../Data/logInManager.php");
 include("../Data/userManager.php");
+
+$error = "";
+$success ="";
 //POST-MANAGER
 if(isset($_POST['submit'])){
-  echo $_POST['submit'];
+  
   switch($_POST['submit']) {
     case 'Log Out':
     session_destroy();
     header("Location: index.php");
     break;
     case 'Change Password':
-    //TODO:Check for injection
-    //...
+    $oldPassword = "";
+    $newPasswordHashed = "";
+    if((isset($_POST['OldPassword']) && !empty(trim($_POST['OldPassword'])) && strlen(trim($_POST['OldPassword'])) <= 100) && (isset($_POST['NewPassword']) && !empty(trim($_POST['NewPassword'])) && strlen(trim($_POST['NewPassword'])) <= 100)){
+      $oldPassword = htmlspecialchars(trim($_POST['OldPassword']));
+      $newPasswordHashed = password_hash( htmlspecialchars(trim($_POST['NewPassword'])),PASSWORD_DEFAULT);
+      $res = changePassword($_SESSION['uId'],$oldPassword,$newPasswordHashed);
+      if($res){
+        $success .= "The password was succesfully changed! </br>";
+      }else{
+        $error .= "something went wrong or your old password is wrong, please try again </br>";
+      }
+    } else {
+      $error .= "old or new password is missing</br>";
+    }
     break;
     case 'Change Username':
-    //TODO: check for injection
-    //...
+    if(isset($_POST['username']) && !empty(trim($_POST['username'])) && strlen(trim($_POST['username'])) <= 30){
+      $res = checkUserOrEmailExists(htmlspecialchars(trim($_POST['username'])),"");
+      if($res[0] != 1){
+        $username = htmlspecialchars(trim($_POST['username']));
+        $res = changeUserName($_SESSION['uId'],$username);
+    if($res){
+      $success .= "your username was changed successfuly. You're now called " . $username . "</br>";
+    }else{
+      $error .= "something went wrong while changing your username";
+    }
+    //update session
+    $_SESSION['userName'] = $username;
+
+      }else{
+        $error .= "username already exists, please use another one</br>";
+      }
+    } else {
+      $error .= "username format not supported, please try another one</br>";
+    }
+
     break;
   }
 }
+
+
 
 //checks if there valid is a session active
 
@@ -95,6 +130,30 @@ if(isset($_POST['submit'])){
                 </div>
       </nav>
 </div>
+<?php
+if($error != ""){
+?>
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+<?php echo $error ?>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<?php
+}
+?>
+<?php
+if($success != ""){
+?>
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+<?php echo $success ?>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<?php
+}
+?>
  <!-- chat layout reference: https://bootsnipp.com/snippets/featured/message-chat-box -->
 <div class="row">
 <div data-simplebar class="userList container col-md-4 border border-secondary rounded bg-light">
@@ -218,20 +277,21 @@ if($user['uId'] != $_SESSION['uId'] && $user['uId'] != null){
       </div>
       <div class="modal-body">
         <!-- TODO: Action and Method -->
-        <form>
-        <!-- TODO: add verification patterns -->
+        <form action="" method="POST">
         <div class="form-group">
-        <label for="currentPswdChangeInput">Current Password</label>
-        <input type="password" class="form-control" id="currentpswdChangeInput" placeholder="Current Password">
+        <label for=newPswdChangeInput">Old Password</label>
+        <input type="password" name="OldPassword" class="form-control" id="newPswdChangeInput" placeholder="New Password" required="true" pattern="(?=^.{8,}$)(?=.*\d+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" maxlength="100">
+        <small class="form-text text-muted">longer than 8 characters, needs to contain a capital letter and a number</small>
         </div>
         <div class="form-group">
         <label for=newPswdChangeInput">New Password</label>
-        <input type="password" class="form-control" id="newPswdChangeInput" placeholder="New Password">
+        <input type="password" name="NewPassword" class="form-control" id="newPswdChangeInput" placeholder="New Password" required="true" pattern="(?=^.{8,}$)(?=.*\d+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" maxlength="100">
+        <small class="form-text text-muted">longer than 8 characters, needs to contain a capital letter and a number</small>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button"  type="submit" class="btn btn-primary">Change Password</button>
+        <input type="submit" class="btn btn-primary" value="Change Password" name="submit">
       </div>
       </form>
     </div>
@@ -249,16 +309,17 @@ if($user['uId'] != $_SESSION['uId'] && $user['uId'] != null){
       </div>
       <div class="modal-body">
         <!-- TODO: Action and Method -->
-        <form>
+        <form action="" method="POST">
         <!-- TODO: add verification patterns -->
         <div class="form-group">
         <label for=newUseranmeInput">New Username</label>
-        <input type="text" class="form-control" id="newUseranmeInput" placeholder="New Username">
+        <input name="username" type="text" class="form-control" id="newUseranmeInput" placeholder="New Username" maxlength="30" required="true" name="username" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{6,}">
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button"  type="submit" class="btn btn-primary">Change Username</button>
+        
+        <input type="submit" class="btn btn-primary" value="Change Username" name="submit">
       </div>
       </form>
     </div>

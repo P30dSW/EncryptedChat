@@ -1,7 +1,6 @@
 <?php
 
 //dbConnector
-include("dbConnector.php");
 function getMessage($userFrom, $userTo){
     $firstTenMessages[] = null;
     $mysql_connection = concection();
