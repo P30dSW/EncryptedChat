@@ -3,3 +3,6 @@
     right: 0 !important;
     left: auto !important;
 }
+#content{
+    height: 85%;
+}

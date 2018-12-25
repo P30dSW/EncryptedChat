@@ -34,6 +34,7 @@ if(isset($_POST['submit'])){
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="styles/chat.css"/>
+<link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
 </head>
 <body>
 <div>
@@ -76,7 +77,7 @@ if(isset($_POST['submit'])){
                                     <img src="../Image/Profile_Pictures/<?php echo getImageNameFromUid($_SESSION['uId']) ?>" width="30" height="30" class="d-inline-block align-top rounded-circle border border-dark" alt="">
                                     <?php echo $_SESSION['userName'] ?>
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="UserDropdownMenuLink">
+                                <div class="shadow dropdown-menu" aria-labelledby="UserDropdownMenuLink">
                                     <a class="dropdown-item" href="#" data-target="#pswdChangeMdl" data-toggle="modal" data-backdrop="static" data-keyboard="false">Change Password</a>
                                     <a class="dropdown-item" href="#" data-target="#changeusrnameMdl" data-toggle="modal" data-backdrop="static" data-keyboard="false">Change Username</a>
                                     <form atrcion="" Method="POST">
@@ -96,7 +97,8 @@ if(isset($_POST['submit'])){
 </div>
  <!-- chat layout reference: https://bootsnipp.com/snippets/featured/message-chat-box -->
 <div class="row">
-<div class=" userList container col-md-4 border border-dark rounded">
+<div data-simplebar class="userList container col-md-4 border border-secondary rounded bg-light">
+  
 <?php
 //Set Userlist here
 $userListJSON = "[{\"uId\":1,\"userName\":\"testUser01\",\"profileSrc\":\"img/dummy_2.jpeg\"},{\"uId\":2,\"userName\":\"testUser02\",\"profileSrc\":\"img/dummy_profile.png\"},{\"uId\":3,\"userName\":\"testUser03\",\"profileSrc\":\"img/dummy_profile.png\"},{\"uId\":4,\"userName\":\"testUser04\",\"profileSrc\":\"img/dummy_profile.png\"},{\"uId\":5,\"userName\":\"testUser05\",\"profileSrc\":\"img/dummy_profile.png\"}]";
@@ -104,14 +106,14 @@ $userList = getListOfAllUsers();
 //removes current user
 
 foreach ($userList as $user) {
-if($user['uId'] != $_SESSION['uId']){
+if($user['uId'] != $_SESSION['uId'] && $user['uId'] != null){
     ?>
-    <div class="users card border border-grey rounded mt-1 md-1 m-1" uId="<?php echo $user['uId']?>" userName="<?php echo $user['userName']?>">
+    <div data-tilt data-tilt-axis="y" class="shadow users card border border-grey rounded mt-1 md-1 m-1 " uId="<?php echo $user['uId']?>" userName="<?php echo $user['userName']?>">
    
         <div class="d-flex text-dark">
     
         <img class="rounded-circle border border-dark mt-1 md-1 m-1" src="../Image/Profile_Pictures/<?php echo $user['profilePicName'] ?>" height="50" width="50" />
-        <p><?php echo $user['userName']; ?></p>
+        <p class="userNameOnCard"><?php echo $user['userName']; ?></p>
 </div>
         
 </div>
@@ -121,16 +123,16 @@ if($user['uId'] != $_SESSION['uId']){
 ?>
 
 </div>
-<div class="container col-md-8 border border-dark rounded">
+<div class="container col-md-8 border border-secondary rounded bg-light">
 <div class="mesgs">
           <div class="msg_history ">
-          
+          <div data-simplebar class="msg_scroll_content">
           <div class="sent_msg">
                 <p>BOI
                 </br>
                 <small><i>18.12.18 08:00</i></small>
                 </br>
-                <button id="changeMessageBtn" type="button" class="btn btn-secondary btn-sm rounded-circle" href="#" data-target="#editMessageMdl" data-toggle="modal" data-backdrop="static" data-keyboard="false">✏</button>
+                <button id="changeMessageBtn" type="button" class="changeMessageBtn btn btn-secondary btn-sm rounded-circle" href="#" data-target="#editMessageMdl" data-toggle="modal" data-backdrop="static" data-keyboard="false">✏</button>
                 <!-- TODO: calls a ajay js function -->
                 <button id="deleteMessageBtn" type="button" class="btn btn-secondary btn-sm rounded-circle">🗑</button></p>
             </div>
@@ -193,6 +195,7 @@ if($user['uId'] != $_SESSION['uId']){
                 <p>Wut?</p>
         
         </div>
+</div>
         </div>
         <div class="typeMsg">
             <div class="inputMsg">
@@ -293,9 +296,11 @@ TODO: goes through js. adds the mId in the modal attributes -->
 <footer class="footer">
         <p calss="text-center" >&copy; GIBM 2018</p>
 </footer>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js" ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/simplebar@latest/dist/simplebar.js"></script>
 <script src="scripts/chat.js"></script>
 </body>
 </html>

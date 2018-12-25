@@ -198,7 +198,7 @@ switch($_POST['submit']) {
                                     <img src="../Image/Profile_Pictures/<?php echo getImageNameFromUid($_SESSION['uId']) ?>" width="30" height="30" class="d-inline-block align-top rounded-circle border border-dark" alt="">
                                     <?php echo $_SESSION['userName'] ?>
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="UserDropdownMenuLink">
+                                <div class="shadow dropdown-menu" aria-labelledby="UserDropdownMenuLink">
                                     <a class="dropdown-item" href="#" data-target="#pswdChangeMdl" data-toggle="modal" data-backdrop="static" data-keyboard="false">Change Password</a>
                                     <a class="dropdown-item" href="#" data-target="#changeusrnameMdl" data-toggle="modal" data-backdrop="static" data-keyboard="false">Change Username</a>
                                     <form atrcion="" Method="POST">
@@ -228,6 +228,7 @@ if($error != ""){
 <?php
 }
 ?>
+<div id="content">
     <div class="jumbotron">
 <h1 class="text-center">Let's Chat!</h1>
 <p class="lead text-center">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
@@ -251,7 +252,7 @@ if(! isset($_SESSION['IsLogIn'])){
           <p class="text-center">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
           <p class="text-center"><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
     
-
+                            
 <!-- Login in Sign In Modals -->
  <div class="modal fade" id="SignInMdl" tabindex="-1" role="dialog" aria-labelledby="singInLbl" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -391,6 +392,6 @@ if(! isset($_SESSION['IsLogIn'])){
 <footer class="footer">
         <p calss="text-center" >&copy; GIBM 2018</p>
 </footer>
-
+</div>
 </body>
 </html>

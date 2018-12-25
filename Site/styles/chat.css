@@ -1,4 +1,4 @@
-body, html {
+body, html, .container {
     height: 100%;
 }
 .dropdown-menu {
@@ -6,6 +6,9 @@ body, html {
   left: auto !important;
 }
   .row { 
+    height: 85%!important;
+    
+      display: flex;
       margin: 0; 
       padding: 0 
 }
@@ -15,8 +18,8 @@ body, html {
     width: 100%;
   }
   .msg_history {
-    height: 516px;
-    overflow-y: auto;
+    height: 85%;
+    
   }
   .typeMsg {
       border-top: 1px solid #c4c4c4;
@@ -41,8 +44,8 @@ body, html {
   }
 
 .userList {
-height:  516px; 
-overflow-y: auto;
+  height: 100%!important;
+    
 }
 
 .sent_msg {
@@ -78,6 +81,12 @@ overflow-y: auto;
    }
    .users{
     cursor: pointer !important;
-
+    transform-style: preserve-3d;
+   }
+   .userNameOnCard{
+    transform: translateZ(10px);
+   }
+   .msg_scroll_content{
+     height: 100%!important;
    }
  
