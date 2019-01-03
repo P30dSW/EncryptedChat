@@ -5,7 +5,7 @@ include("../messageManager.php");
 //  if($result){
 //      echo "Successful!";
 //  }
-$message_List = getMessage(42,43);
+$message_List = getMessage(43,44);
 
 foreach ($message_List as $messageQuery) {
     $output = "";

@@ -165,7 +165,7 @@ function refreshMessages() {
                                     div = "<div class='received_msg'><p mId=" +element.mId+" fromUserId=" +element.fromUserId +" toUserId=" + element.toUserId + ">"+element.message+"</br><small><i>"+ element.timeSend+"</i></small> </p></div>";
                                     $(".msg_history").children().first().append(div);
                                 }else{
-                                    div = "<div class='sent_msg'><p mId=" +element.mId+" fromUserId=" +element.fromUserId +" toUser=" + element.toUserId + ">"+ element.message+"</br><small><i>"+ element.timeSend+"</i></small><br><button id='changeMessageBtn' type='button' class='changeMessageBtn btn btn-secondary btn-sm rounded-circle' href='#' data-target='#editMessageMdl' data-toggle='modal' data-backdrop='static' data-keyboard='false'>✏</button><button id='deleteMessageBtn' type='button' class='btn btn-secondary btn-sm rounded-circle'>🗑</button></p></p></div>";
+                                    div = "<div class='sent_msg'><p mId=" +element.mId+" fromUserId=" +element.fromUserId +" toUser=" + element.toUserId + ">"+ element.message+"</br><small><i>"+ element.timeSend+"</i></small><br><button id='changeMessageBtn' type='button' class='changeMessageBtn btn btn-secondary btn-sm rounded-circle' href='#' data-target='#editMessageMdl' data-toggle='modal' data-backdrop='static' data-keyboard='false'>✏</button><button id='deleteMessageBtn' type='button' class='btn btn-secondary btn-sm rounded-circle'>🗑</button></p></div>";
                                     $(".msg_history").children().first().append(div);
                                 }
                             }
