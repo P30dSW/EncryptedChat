@@ -1,7 +1,10 @@
+var currentChatJSON = [];
 $(document).ready(function () {
     
     //method when clicking a user card
     $(".users").click(function() {
+        $("#toSendMsg").removeAttr("disabled");
+        $("#sendMsg").removeAttr("disabled");
         updateChatScreen(this);
      });
     //Method for pushing the send button
@@ -10,6 +13,7 @@ $(document).ready(function () {
         //console.log(message);
         userId = $("#sendMsg").attr("uId");
         if (userId == 0) {
+            //TODO:add bootstrap alert
             alert("Select a user first");
             return null;
         }
@@ -32,6 +36,7 @@ function updateChatScreen(obj) {
     //TODO: show the chat archive
     //Process:
     //1. Fetch all messages between the two users
+    toUserId = obj.getAttribute("uid");
     $.ajax({
         url: "http://localhost/EncryptedChat/Backend/chatApi.php",
         dataType: "json",
@@ -48,26 +53,41 @@ function updateChatScreen(obj) {
         success: function(json){
             console.log(json);
             //2. Remove all currently shown messages (Hint: class="simplebar-content")
+            currentChatJSON = json;
+            $(".msg_history").fadeOut(400,function(){
+
+            
             $(".msg_history").html("");
             scroll = "<div data-simplebar class='msg_scroll_content'>";
             $(".msg_history").append(scroll);
-
+            if(json.length != 0){
+                $.each(json, function(i){ 
+                    
+                    if (typeof json[i] != "undefined") {
+                        element = json[i];
+                        //checks if the message is from or to
+                        
+                        if(json[i].toUserId != toUserId){
+                            div = "<div class='received_msg'><p mId=" +element.mId+" fromUserId=" +element.fromUserId +" toUserId=" + element.toUserId + ">"+element.message+"</br><small><i>"+ element.timeSend+"</i></small> </p></div>";
+                            $(".msg_history").children().first().append(div);
+                        }else{
+                            div = "<div class='sent_msg'><p mId=" +element.mId+" fromUserId=" +element.fromUserId +" toUser=" + element.toUserId + ">"+ element.message+"</br><small><i>"+ element.timeSend+"</i></small><br><button id='changeMessageBtn' type='button' class='changeMessageBtn btn btn-secondary btn-sm rounded-circle' href='#' data-target='#editMessageMdl' data-toggle='modal' data-backdrop='static' data-keyboard='false'>✏</button><button id='deleteMessageBtn' type='button' class='btn btn-secondary btn-sm rounded-circle'>🗑</button></p></div>";
+                            $(".msg_history").children().first().append(div);
+                        }
+                    }
+                });
+           
             //3. Insert all documented messages
-            i = 10;
-
-            while (i > 0) {
-                if (typeof json[i] == "undefined") {
-                    continue;
-                }
-                element = json[i];
-                i--;
-
-                div = "<div class='received_msg'><p>mId: "+element.mId+" fromUser: "+element.fromUser+" toUser: "+element.toUser+"<br/>timeSend: "+element.timeSend+"<br/>message: "+element.message+"</p></div>";
-                $(".msg_history").children().first().append(div);
-            }
-
             //4. tell send button which user is currently selected
             $("#sendMsg").attr("uId", obj.getAttribute("uid"));
+            
+            
+        }else{
+            $(".msg_history").children().first().append("<p>no Messages</p>");
+            $("#sendMsg").attr("uId", obj.getAttribute("uid"));
+        }
+    });
+    $(".msg_history").fadeIn();
         }
     });
 }
@@ -97,11 +117,10 @@ function sendMessageFromInput(toUser, input) {
 //refresh message history
 function refreshMessages() {
     //fetch partner ID
+    
     partnerId = $("#sendMsg").attr("uId");
     //clear message board
-    $(".msg_history").html("");
-    scroll = "<div data-simplebar class='msg_scroll_content'>";
-    $(".msg_history").append(scroll);
+   
     //handle 0
     if (partnerId == 0) {
         console.log("no partner selected");
@@ -122,23 +141,49 @@ function refreshMessages() {
             return null;
         },
         success: function(json){
-            //clear message board (again
-            $(".msg_history").html("");
-            scroll = "<div data-simplebar class='msg_scroll_content'>";
-            $(".msg_history").append(scroll);
+            //clear message board (again)
+            //if the json is equal as the chat json, then there is no need to update
+            
+            if(_.isEqual(currentChatJSON, json)){
+                
+            }else{
+                currentChatJSON = json;
+                $(".msg_history").fadeOut(400,function(){
 
-            //set all returned messages
-            i = 10;
-            while (i > 0) {
-                if (typeof json[i] == "undefined") {
-                    continue;
+            
+                    $(".msg_history").html("");
+                    scroll = "<div data-simplebar class='msg_scroll_content'>";
+                    $(".msg_history").append(scroll);
+                    if(json.length != 0){
+                        $.each(json, function(i){ 
+                            console.log(json[i]);
+                            if (typeof json[i] != "undefined") {
+                                element = json[i];
+                                //checks if the message is from or to
+                                
+                                if(json[i].toUserId != toUserId){
+                                    div = "<div class='received_msg'><p mId=" +element.mId+" fromUserId=" +element.fromUserId +" toUserId=" + element.toUserId + ">"+element.message+"</br><small><i>"+ element.timeSend+"</i></small> </p></div>";
+                                    $(".msg_history").children().first().append(div);
+                                }else{
+                                    div = "<div class='sent_msg'><p mId=" +element.mId+" fromUserId=" +element.fromUserId +" toUser=" + element.toUserId + ">"+ element.message+"</br><small><i>"+ element.timeSend+"</i></small><br><button id='changeMessageBtn' type='button' class='changeMessageBtn btn btn-secondary btn-sm rounded-circle' href='#' data-target='#editMessageMdl' data-toggle='modal' data-backdrop='static' data-keyboard='false'>✏</button><button id='deleteMessageBtn' type='button' class='btn btn-secondary btn-sm rounded-circle'>🗑</button></p></p></div>";
+                                    $(".msg_history").children().first().append(div);
+                                }
+                            }
+                        });
+                   
+                    //3. Insert all documented messages
+                    //4. tell send button which user is currently selected
+                    $("#sendMsg").attr("uId", partnerId);
+                    
+                    
+                }else{
+                    $(".msg_history").children().first().append("<p>no Messages</p>");
+                    $("#sendMsg").attr("uId", partnerId);
                 }
-                element = json[i];
-                i--;
-
-                div = "<div class='received_msg'><p>mId: "+element.mId+" fromUser: "+element.fromUser+" toUser: "+element.toUser+"<br/>timeSend: "+element.timeSend+"<br/>message: "+element.message+"</p></div>";
-                $(".msg_history").children().first().append(div);
+            });
+            $(".msg_history").fadeIn();
             }
+           
         }
     });
 }
@@ -158,4 +203,21 @@ function getCookie(cname) {
       }
     }
     return "";
+  }
+
+  //checks if array are equal
+  function arraysEqual(a, b) {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length != b.length) return false;
+  
+    // If you don't care about the order of the elements inside
+    // the array, you should sort both arrays here.
+    // Please note that calling sort on an array will modify that array.
+    // you might want to clone your array first.
+  
+    for (var i = 0; i < a.length; ++i) {
+      if (a[i] !== b[i]) return false;
+    }
+    return true;
   }

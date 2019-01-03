@@ -50,7 +50,7 @@ body, html, .container {
 
 .sent_msg {
   float: right;
-  width: 46%;
+  width: 60%;
   overflow:hidden; 
   margin:26px 0 26px;
   padding: 10px;

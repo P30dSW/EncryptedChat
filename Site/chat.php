@@ -185,81 +185,13 @@ if($user['uId'] != $_SESSION['uId'] && $user['uId'] != null){
 <div class="container col-md-8 border border-secondary rounded bg-light">
 <div class="mesgs">
           <div class="msg_history ">
-          <div data-simplebar class="msg_scroll_content">
-          <div class="sent_msg">
-                <p>BOI
-                </br>
-                <small><i>18.12.18 08:00</i></small>
-                </br>
-                <button id="changeMessageBtn" type="button" class="changeMessageBtn btn btn-secondary btn-sm rounded-circle" href="#" data-target="#editMessageMdl" data-toggle="modal" data-backdrop="static" data-keyboard="false">✏</button>
-                <!-- TODO: calls a ajay js function -->
-                <button id="deleteMessageBtn" type="button" class="btn btn-secondary btn-sm rounded-circle">🗑</button></p>
-            </div>
-            
-            
-            
-              <div class="received_msg">
-                
-                  <p>Test which is a new approach to have all
-                    solutions</br> idjsidjvisjvsid</br>dcjisdcisjcisjdc</p>
-              
-            </div>
-        
-       
-              <div class="received_msg">
-                
-                  <p>Test which is a new approach to have all
-                    solutions</br> idjsidjvisjvsid</br>dcjisdcisjcisjdc</p>
-              
-            </div>
-            
-        
-        
-              <div class="received_msg">
-                
-                  <p>Test which is a new approach to have all
-                    solutions</br> idjsidjvisjvsid</br>dcjisdcisjcisjdc</p>
-              
-            </div>
-            
-        
-        
-              <div class="received_msg">
-                
-                  <p>Test which is a new approach to have all
-                    solutions</br> idjsidjvisjvsid</br>dcjisdcisjcisjdc</p>
-              
-            </div>
-            
-        
-        
-              <div class="received_msg">
-                
-                  <p>Test which is a new approach to have all
-                    solutions</br> idjsidjvisjvsid</br>dcjisdcisjcisjdc</p>
-              
-            </div>
-            
-        
-        
-              <div class="received_msg">
-                
-                  <p>Test which is a new approach to have all
-                    solutions</br> idjsidjvisjvsid</br>dcjisdcisjcisjdc</p>
-              
-            
-            
-        </div>
-        <div class="sent_msg">
-                <p>Wut?</p>
-        
-        </div>
-</div>
+          <div data-simplebar class='msg_scroll_content'>
+          </div>
         </div>
         <div class="typeMsg">
             <div class="inputMsg">
-              <input id="toSendMsg" type="text" placeholder="Type a message" />
-              <button id="sendMsg" uId="0" class="sendMsgBtn btn align-middle" type="button">Send!</button>
+              <input id="toSendMsg" type="text" placeholder="Type a message" disabled/>
+              <button id="sendMsg" uId="0" class="sendMsgBtn btn align-middle" type="button" disabled>Send!</button>
             </div>
           </div>
 </div>
@@ -279,8 +211,8 @@ if($user['uId'] != $_SESSION['uId'] && $user['uId'] != null){
         <!-- TODO: Action and Method -->
         <form action="" method="POST">
         <div class="form-group">
-        <label for=newPswdChangeInput">Old Password</label>
-        <input type="password" name="OldPassword" class="form-control" id="newPswdChangeInput" placeholder="New Password" required="true" pattern="(?=^.{8,}$)(?=.*\d+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" maxlength="100">
+        <label for=oldPswdChangeInput">Old Password</label>
+        <input type="password" name="OldPassword" class="form-control" id="oldPswdChangeInput" placeholder="New Password" required="true" pattern="(?=^.{8,}$)(?=.*\d+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" maxlength="100">
         <small class="form-text text-muted">longer than 8 characters, needs to contain a capital letter and a number</small>
         </div>
         <div class="form-group">
@@ -362,6 +294,7 @@ TODO: goes through js. adds the mId in the modal attributes -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/simplebar@latest/dist/simplebar.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
 <script src="scripts/chat.js"></script>
 </body>
 </html>
