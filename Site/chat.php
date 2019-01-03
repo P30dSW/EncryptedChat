@@ -258,8 +258,8 @@ if($user['uId'] != $_SESSION['uId'] && $user['uId'] != null){
         </div>
         <div class="typeMsg">
             <div class="inputMsg">
-              <input type="text" placeholder="Type a message" />
-              <button class="sendMsgBtn btn align-middle" type="button">Send!</button>
+              <input id="toSendMsg" type="text" placeholder="Type a message" />
+              <button id="sendMsg" uId="0" class="sendMsgBtn btn align-middle" type="button">Send!</button>
             </div>
           </div>
 </div>

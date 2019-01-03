@@ -4,10 +4,23 @@ $(document).ready(function () {
     $(".users").click(function() {
         updateChatScreen(this);
      });
-    //TODO: Method for pushing the send button
-    //TODO: Method for deleting a message (Hint: id="deleteMessageBtn")
-    //TODO: Method for editing a message (Hint: id="changeMessageBtn")
-    //TODO: Keep message history current
+    //Method for pushing the send button
+    $("#sendMsg").click(function() {
+        message = $("#toSendMsg").val();
+        //console.log(message);
+        userId = $("#sendMsg").attr("uId");
+        if (userId == 0) {
+            alert("Select a user first");
+            return null;
+        }
+        sendMessageFromInput(userId, message);
+        //remove sent message from input box
+        $("#toSendMsg").val("");
+    })
+    //Keep message history current every five seconds
+    setInterval(refreshMessages, 5000)
+    //refresh when done
+    refreshMessages();
 });
 
 //only for testing
@@ -40,12 +53,88 @@ function updateChatScreen(obj) {
             $(".msg_history").append(scroll);
 
             //3. Insert all documented messages
-            i = 1;
+            i = 10;
 
-            while (typeof json[i] !== "undefined") {
-                console.log(json[i]);
+            while (i > 0) {
+                if (typeof json[i] == "undefined") {
+                    continue;
+                }
                 element = json[i];
-                i++;
+                i--;
+
+                div = "<div class='received_msg'><p>mId: "+element.mId+" fromUser: "+element.fromUser+" toUser: "+element.toUser+"<br/>timeSend: "+element.timeSend+"<br/>message: "+element.message+"</p></div>";
+                $(".msg_history").children().first().append(div);
+            }
+
+            //4. tell send button which user is currently selected
+            $("#sendMsg").attr("uId", obj.getAttribute("uid"));
+        }
+    });
+}
+
+//send message in the message input
+function sendMessageFromInput(toUser, input) {
+    $.ajax({
+        url: "http://localhost/EncryptedChat/Backend/chatApi.php",
+        headers: {
+            'SESSION_ID':getCookie('PHPSESSID'),
+            'FUNCTION': 'SEND_MESSAGE',
+            //enter target user ID
+            'VAL01': toUser,
+            'VAL02': input,
+        },
+        error: function(error){ 
+            console.log(error);
+            return null;
+        },
+        success: function(){
+            console.log(toUser+": "+input);
+            refreshMessages();
+        }
+    });
+}
+
+//refresh message history
+function refreshMessages() {
+    //fetch partner ID
+    partnerId = $("#sendMsg").attr("uId");
+    //clear message board
+    $(".msg_history").html("");
+    scroll = "<div data-simplebar class='msg_scroll_content'>";
+    $(".msg_history").append(scroll);
+    //handle 0
+    if (partnerId == 0) {
+        console.log("no partner selected");
+        return null;
+    }
+    //fill message board
+    $.ajax({
+        url: "http://localhost/EncryptedChat/Backend/chatApi.php",
+        dataType: "json",
+        headers: {
+            'SESSION_ID':getCookie('PHPSESSID'),
+            'FUNCTION': 'GET_MESSAGES',
+            //enter target user ID
+            'VAL01': partnerId,
+        },
+        error: function(error){ 
+            console.log(error);
+            return null;
+        },
+        success: function(json){
+            //clear message board (again
+            $(".msg_history").html("");
+            scroll = "<div data-simplebar class='msg_scroll_content'>";
+            $(".msg_history").append(scroll);
+
+            //set all returned messages
+            i = 10;
+            while (i > 0) {
+                if (typeof json[i] == "undefined") {
+                    continue;
+                }
+                element = json[i];
+                i--;
 
                 div = "<div class='received_msg'><p>mId: "+element.mId+" fromUser: "+element.fromUser+" toUser: "+element.toUser+"<br/>timeSend: "+element.timeSend+"<br/>message: "+element.message+"</p></div>";
                 $(".msg_history").children().first().append(div);
@@ -53,7 +142,6 @@ function updateChatScreen(obj) {
         }
     });
 }
-
 
 //function to get Cookie
 function getCookie(cname) {
