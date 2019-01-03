@@ -5,8 +5,9 @@ $(document).ready(function () {
         updateChatScreen(this);
      });
     //TODO: Method for pushing the send button
-    //TODO: Method for deleting a message
-    //TODO: Method for editing a message
+    //TODO: Method for deleting a message (Hint: id="deleteMessageBtn")
+    //TODO: Method for editing a message (Hint: id="changeMessageBtn")
+    //TODO: Keep message history current
 });
 
 //only for testing
@@ -16,26 +17,41 @@ $(document).ready(function () {
  */
 function updateChatScreen(obj) {
     //TODO: show the chat archive
-    //example of a ajax request to the REST api
-    console.log($(obj).attr("uId"));
+    //Process:
+    //1. Fetch all messages between the two users
     $.ajax({
         url: "http://localhost/EncryptedChat/Backend/chatApi.php",
         dataType: "json",
         headers: {
             'SESSION_ID':getCookie('PHPSESSID'),
-            'FUNCTION': 'SEND_MESSAGE',
-            'VAL01': $(obj).attr("uId"),
-            'VAL02':"Hello World"
-
+            'FUNCTION': 'GET_MESSAGES',
+            //enter target user ID
+            'VAL01': obj.getAttribute("uid"),
         },
-        error: function(erorr){ 
-            console.log(erorr);
-      },
-      success: function(json){
-        console.log(json);
-      }
-          });
+        error: function(error){ 
+            console.log(error);
+            return null;
+        },
+        success: function(json){
+            console.log(json);
+            //2. Remove all currently shown messages (Hint: class="simplebar-content")
+            $(".msg_history").html("");
+            scroll = "<div data-simplebar class='msg_scroll_content'>";
+            $(".msg_history").append(scroll);
 
+            //3. Insert all documented messages
+            i = 1;
+
+            while (typeof json[i] !== "undefined") {
+                console.log(json[i]);
+                element = json[i];
+                i++;
+
+                div = "<div class='received_msg'><p>mId: "+element.mId+" fromUser: "+element.fromUser+" toUser: "+element.toUser+"<br/>timeSend: "+element.timeSend+"<br/>message: "+element.message+"</p></div>";
+                $(".msg_history").children().first().append(div);
+            }
+        }
+    });
 }
 
 
