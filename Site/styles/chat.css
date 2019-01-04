@@ -10,7 +10,7 @@ body, html, .container {
     
       display: flex;
       margin: 0; 
-      padding: 0 
+      padding: 0;
 }
 .mesgs {
     float: left;
@@ -45,7 +45,6 @@ body, html, .container {
 
 .userList {
   height: 100%!important;
-    
 }
 
 .sent_msg {

@@ -130,6 +130,7 @@ if(isset($_POST['submit'])){
                 </div>
       </nav>
 </div>
+<div id="errorsDiv">
 <?php
 if($error != ""){
 ?>
@@ -154,13 +155,14 @@ if($success != ""){
 <?php
 }
 ?>
+</div>
  <!-- chat layout reference: https://bootsnipp.com/snippets/featured/message-chat-box -->
-<div class="row">
-<div data-simplebar class="userList container col-md-4 border border-secondary rounded bg-light">
+ <div calss="container">
+   <div class="row">
+<div data-simplebar class=" userList col-4 border border-secondary rounded bg-light">
   
 <?php
 //Set Userlist here
-$userListJSON = "[{\"uId\":1,\"userName\":\"testUser01\",\"profileSrc\":\"img/dummy_2.jpeg\"},{\"uId\":2,\"userName\":\"testUser02\",\"profileSrc\":\"img/dummy_profile.png\"},{\"uId\":3,\"userName\":\"testUser03\",\"profileSrc\":\"img/dummy_profile.png\"},{\"uId\":4,\"userName\":\"testUser04\",\"profileSrc\":\"img/dummy_profile.png\"},{\"uId\":5,\"userName\":\"testUser05\",\"profileSrc\":\"img/dummy_profile.png\"}]";
 $userList = getListOfAllUsers();
 //removes current user
 
@@ -182,7 +184,7 @@ if($user['uId'] != $_SESSION['uId'] && $user['uId'] != null){
 ?>
 
 </div>
-<div class="container col-md-8 border border-secondary rounded bg-light">
+<div class="  col-8 border border-secondary rounded bg-light">
 <div class="mesgs">
           <div class="msg_history ">
           <div data-simplebar class='msg_scroll_content'>
@@ -279,11 +281,12 @@ TODO: goes through js. adds the mId in the modal attributes -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button"  type="submit" class="btn btn-primary">Edit Message</button>
+        <button id="editMessageSendBtn" type="button"  type="submit" class="btn btn-primary">Edit Message</button>
       </div>
       </form>
     </div>
   </div>
+</div>
 </div>
 </div>
 <footer class="footer">

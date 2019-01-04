@@ -11,7 +11,7 @@ function getMessage($userFrom, $userTo){
             //get first messages
             //Order by timeSend Limit 10
             //JOIN for the Username instead of Id
-            $selectQuery = "Select messages.mId,messages.message,u1.userName as fromUser,u2.userName as toUser,messages.fromUser as frmUsrId,messages.toUser as tUsrId,messages.timeSend, messages.isEdited FROM messages  INNER JOIN users u1 ON messages.fromUser = u1.uId INNER JOIN users u2 ON messages.toUser = u2.uId where  ((fromUser = ? && toUser = ?)||(fromUser = ? && toUser = ?)) && (isDeleted = 0) ORDER BY messages.timeSend ASC limit 10;";
+            $selectQuery = "Select messages.mId,messages.message,u1.userName as fromUser,u2.userName as toUser,messages.fromUser as frmUsrId,messages.toUser as tUsrId,messages.timeSend, messages.isEdited FROM messages  INNER JOIN users u1 ON messages.fromUser = u1.uId INNER JOIN users u2 ON messages.toUser = u2.uId where  ((fromUser = ? && toUser = ?)||(fromUser = ? && toUser = ?)) && (isDeleted = 0) ORDER BY messages.timeSend ASC;";
             $selectStmt = $mysql_connection->prepare($selectQuery);
             $selectStmt->bind_param("ssss",$userFrom,$userTo, $userTo,$userFrom);
             $selectStmt->execute();
