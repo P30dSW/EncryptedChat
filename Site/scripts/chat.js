@@ -28,8 +28,6 @@ $(document).ready(function () {
     $(document).on("click","#deleteMessageBtn",deleteMessage);
     $(document).on("click","#changeMessageBtn",showEditModal);
     $("#editMessageSendBtn").click(editMessage);
-    ($("#errorsDiv").append("<div class='alert alert-danger alert-dismissible fade show' role='alert'>"+ "Error:Something went wrong with our messaging system. <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</sp</button</div>")).slideDown("slow");
-
     
 });
 
