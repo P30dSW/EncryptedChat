@@ -67,6 +67,7 @@ if(isset($_POST['submit'])){
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Let's Chat! Chat Portal</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="styles/chat.css"/>
 <link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
@@ -157,8 +158,8 @@ if($success != ""){
 ?>
 </div>
  <!-- chat layout reference: https://bootsnipp.com/snippets/featured/message-chat-box -->
- <div calss="container">
-   <div class="row">
+ <div class="container">
+   <div class="row no-gutters">
 <div data-simplebar class=" userList col-4 border border-secondary rounded bg-light">
   
 <?php
@@ -247,8 +248,9 @@ if($user['uId'] != $_SESSION['uId'] && $user['uId'] != null){
         <!-- TODO: add verification patterns -->
         <div class="form-group">
         <label for=newUseranmeInput">New Username</label>
-        <input name="username" type="text" class="form-control" id="newUseranmeInput" placeholder="New Username" maxlength="30" required="true" name="username" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{6,}">
-        </div>
+        <input name="username" type="text" class="form-control" id="newUseranmeInput" placeholder="New Username" maxlength="30" required="true" name="username" pattern="(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{6,}">
+        <small class="form-text text-muted">longer than 6 characters,must contain a capital letter</small>
+      </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -257,7 +259,7 @@ if($user['uId'] != $_SESSION['uId'] && $user['uId'] != null){
       </div>
       </form>
     </div>
-  </div>
+  
 </div>
 <!-- edit message Modal
 TODO: goes through js. adds the mId in the modal attributes -->
@@ -286,6 +288,7 @@ TODO: goes through js. adds the mId in the modal attributes -->
       </form>
     </div>
   </div>
+</div>
 </div>
 </div>
 </div>

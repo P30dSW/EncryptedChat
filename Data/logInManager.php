@@ -190,22 +190,18 @@ function changeUserName($uid,$newUsername){
 }
 
 function addProfilePicture($img_file){
-    //TODO: Implement method
-
     $profilePicName = "";
     //check fileType
     $fileExt = explode('.',$img_file['name']);
     $fileAcExt = strtolower(end($fileExt));
     $allowed = array('jpg','jpeg','png');
-    // 
     //generate uid
     if(in_array($fileAcExt,$allowed)){
         $newImgName = uniqid('',true);
-        $newDicretory = "../src/Profile_Pictures/" . $newImgName . "." . $fileAcExt;
+        $newDicretory = "../Image/Profile_Pictures/" . $newImgName . "." . $fileAcExt;
         move_uploaded_file($img_file['tmp_name'],$newDicretory);
         $profilePicName = $newImgName . "." . $fileAcExt;
     }
-    
     return $profilePicName;
 }
 ?>

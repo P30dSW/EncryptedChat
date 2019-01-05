@@ -190,6 +190,7 @@ switch($_POST['submit']) {
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<title>Let's Chat! Homepage</title>
 </head>
 <body>
 <div>
@@ -275,7 +276,7 @@ if($success != ""){
 <div id="content">
     <div class="jumbotron">
 <h1 class="text-center">Let's Chat!</h1>
-<p class="lead text-center">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+<p class="lead text-center">This is our fist Website with complete functional user system! Sign In and choose your own name and profile picture! The best part is, you can also chat with other users!</p>
 <?php 
 if(! isset($_SESSION['IsLogIn'])){
                                ?> 
@@ -293,8 +294,8 @@ if(! isset($_SESSION['IsLogIn'])){
     </div>
     
           <h2 class="text-center">Heading</h2> 
-          <p class="text-center">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p class="text-center"><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+          <p class="text-center">This Website was created for a school project. Our chatservice is saver than Whatsapp (please trust us). Visit our github repository and leave a star!</p>
+          <p class="text-center"><a class="btn btn-primary" href="https://github.com/P30dSW/EncryptedChat" role="button">Github Rep &raquo;</a></p>
     
                             
 <!-- Login in Sign In Modals -->
@@ -321,8 +322,9 @@ if(! isset($_SESSION['IsLogIn'])){
         </div>
         <div class="form-group">
         <label for="usrnmInputSignIn">Username</label>
-        <input id="usrnmInputSignIn"class="form-control" type="text" placeholder="Username" maxlength="30" required="true" name="username" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{6,}">
-        </div>
+        <input id="usrnmInputSignIn"class="form-control" type="text" placeholder="Username" maxlength="30" required="true" name="username" pattern="(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{6,}">
+        <small class="form-text text-muted">longer than 6 characters,must contain a capital letter</small>
+      </div>
         <div class="form-group">
 
         <label for="emailInputSignIn">Email address</label>
@@ -362,7 +364,8 @@ if(! isset($_SESSION['IsLogIn'])){
         <div class="form-group">
         <label for="usrnmInputLogIn">Username</label>
         <input id="usrnmInputLogIn"class="form-control" type="text" required="true" placeholder="Username" name="username">
-        </div>
+        <small class="form-text text-muted">longer than 6 characters,must contain a capital letter</small>
+      </div>
         <div class="form-group">
         <label for="passwordInputLogIn">Password</label>
         <input type="password" class="form-control" id="passwordInputLogIn" placeholder="Password" name="password" required="true" pattern="(?=^.{8,}$)(?=.*\d+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" maxlength="100">
@@ -420,8 +423,9 @@ if(! isset($_SESSION['IsLogIn'])){
         <form action="" method="POST">
         <div class="form-group">
         <label for=newUseranmeInput">New Username</label>
-        <input name="username" type="text" class="form-control" id="newUseranmeInput" placeholder="New Username" maxlength="30" required="true" name="username" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{6,}">
-        </div>
+        <input name="username" type="text" class="form-control" id="newUseranmeInput" placeholder="New Username" maxlength="30" required="true" name="username" pattern="(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{6,}">
+        <small class="form-text text-muted">longer than 6 characters,must contain a capital letter</small>
+      </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

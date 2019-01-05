@@ -1,3 +1,10 @@
+/**
+ * This Document has been Documented with JSDoc: https://github.com/jsdoc3/jsdoc
+ * @author Pedro dSW.
+ * @author Paul S.
+ */
+
+
 var currentChatJSON = [];
 var canUpdate = true;
 $(document).ready(function () {
@@ -31,10 +38,10 @@ $(document).ready(function () {
     
 });
 
-//only for testing
-
 /**
  * Updates the chat selection
+ * @async
+ * @param  {DOMelement} obj - DOM Element of the selected usercard
  */
 function updateChatScreen(obj) {
     //TODO: show the chat archive
@@ -115,7 +122,12 @@ function updateChatScreen(obj) {
     canUpdate=true;
 }
 
-//send message in the message input
+/**
+ * send message in the message input
+ * @async
+ * @param  {string} toUser - toUserId as String
+ * @param  {string} input - Message to be sent
+ */
 function sendMessageFromInput(toUser, input) {
     $.ajax({
         url: "http://localhost/EncryptedChat/Backend/chatApi.php",
@@ -141,7 +153,11 @@ function sendMessageFromInput(toUser, input) {
     });
 }
 
-//refresh message history
+/**
+ * refresh message history. Also set in the interval for every 5 sec.
+ * @async
+ * @see {@link https://lodash.com/}
+ */
 function refreshMessages() {
     //fetch partner ID
     if(canUpdate == false){
@@ -175,6 +191,7 @@ function refreshMessages() {
                 $("#errorsDiv").append("<div class='alert alert-danger alert-dismissible fade show' role='alert'>"+ "Error: Something went wrong with the Messagingsystem." + "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</sp</button</div>").slideDown("slow");
                 return;
             }
+            //uses lodash to campre 2 arrays
             if(_.isEqual(currentChatJSON, json)){
                 
             }else{
@@ -230,6 +247,10 @@ function refreshMessages() {
     });
 }
 
+/**
+ * deletes the selected message
+ * @async
+ */
 function deleteMessage(){
 var mId = $(this).parent().attr("mId");
  $.ajax({
@@ -256,7 +277,9 @@ var mId = $(this).parent().attr("mId");
      }
      });
 }
-
+/**
+ * show the Edit Message Modal with the current message value inside the textarea 
+ */
 function showEditModal(){
     var newContent = $(this).parent().contents().get(0).nodeValue;
     $("#editMessageInput").text(newContent);
@@ -264,7 +287,10 @@ function showEditModal(){
    
     $("#editMessageSendBtn").attr("mId",$(this).parent().attr("mId"));
 }
-
+/**
+ * Edits the selected message
+ * @async
+ */
 function editMessage(){
     
     $("#editMessageMdl").modal("toggle");
@@ -292,7 +318,12 @@ function editMessage(){
         }
         });
 }
-//function to get Cookie
+
+/**
+ * function to get Cookie
+ * @param  {string} cname - Keyname of the Cookie
+ * @see {@link https://www.w3schools.com/js/js_cookies.asp}
+ */
 function getCookie(cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -308,17 +339,4 @@ function getCookie(cname) {
     }
     return "";
   }
-  //checks if array are equal
-  function arraysEqual(a, b) {
-    if (a === b) return true;
-    if (a == null || b == null) return false;
-    if (a.length != b.length) return false;
-    // If you don't care about the order of the elements inside
-    // the array, you should sort both arrays here.
-    // Please note that calling sort on an array will modify that array.
-    // you might want to clone your array first.
-    for (var i = 0; i < a.length; ++i) {
-      if (a[i] !== b[i]) return false;
-    }
-    return true;
-  }
+  
