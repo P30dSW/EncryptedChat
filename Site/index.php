@@ -199,7 +199,7 @@ switch($_POST['submit']) {
      <!-- Index Page, Where the LogIn and Register Forms are -->
         <a class="navbar-brand" href="index.php">Let's Chat!</a>
         <!-- Toggler for responsive solutions -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#CollapsableNavbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#CollapsableNavbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
               <!-- Navigation selections -->
@@ -234,7 +234,7 @@ switch($_POST['submit']) {
                                 <div class="shadow dropdown-menu" aria-labelledby="UserDropdownMenuLink">
                                     <a class="dropdown-item" href="#" data-target="#pswdChangeMdl" data-toggle="modal" data-backdrop="static" data-keyboard="false">Change Password</a>
                                     <a class="dropdown-item" href="#" data-target="#changeusrnameMdl" data-toggle="modal" data-backdrop="static" data-keyboard="false">Change Username</a>
-                                    <form atrcion="" Method="POST">
+                                    <form action="index.php" Method="POST">
                                     <input type="submit" value="Log Out" name="submit" class="dropdown-item">
                                     </form>
                                     
@@ -310,19 +310,19 @@ if(! isset($_SESSION['IsLogIn'])){
       </div>
       <div class="modal-body">
       <!-- TODO: Action and Method -->
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="index.php" method="POST" enctype="multipart/form-data">
         <!-- TODO: add verification patters -->
         <div class="form-group">
         <label for="fstNameInputSignIn">First Name</label>
-        <input id="fstNameInputSignIn"class="form-control" type="text" placeholder="First Name" required="true" name="firstname" maxlength="30">
+        <input id="fstNameInputSignIn" class="form-control" type="text" placeholder="First Name" required="true" name="firstname" maxlength="30">
         </div>
         <div class="form-group">
         <label for="lstnmInputSignIn">Last Name</label>
-        <input id="lstnmInputSignIn"class="form-control" type="text" placeholder="Last Name" required="true" maxlength="50" name="lastname">
+        <input id="lstnmInputSignIn" class="form-control" type="text" placeholder="Last Name" required="true" maxlength="50" name="lastname">
         </div>
         <div class="form-group">
         <label for="usrnmInputSignIn">Username</label>
-        <input id="usrnmInputSignIn"class="form-control" type="text" placeholder="Username" maxlength="30" required="true" name="username" pattern="(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{6,}">
+        <input id="usrnmInputSignIn" class="form-control" type="text" placeholder="Username" maxlength="30" required="true" name="username" pattern="(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{6,}">
         <small class="form-text text-muted">longer than 6 characters,must contain a capital letter</small>
       </div>
         <div class="form-group">
@@ -338,6 +338,7 @@ if(! isset($_SESSION['IsLogIn'])){
         <div class="form-group">
           <label for="userProfileInputSignIn">User Profile</label>
           <input type="file" name="file" class="form-control-file" id="userProfileInputSignIn">
+          <small class="form-text text-muted">optional</small>
         </div>
       </div>
       <div class="modal-footer">
@@ -359,11 +360,11 @@ if(! isset($_SESSION['IsLogIn'])){
       </div>
       <div class="modal-body">
         <!-- TODO: Action and Method -->
-        <form action="" method="POST">
+        <form action="index.php" method="POST">
         <!-- TODO: add verification patters -->
         <div class="form-group">
         <label for="usrnmInputLogIn">Username</label>
-        <input id="usrnmInputLogIn"class="form-control" type="text" required="true" placeholder="Username" name="username">
+        <input id="usrnmInputLogIn" class="form-control" type="text" required="true" placeholder="Username" name="username">
         <small class="form-text text-muted">longer than 6 characters,must contain a capital letter</small>
       </div>
         <div class="form-group">
@@ -390,14 +391,14 @@ if(! isset($_SESSION['IsLogIn'])){
         </button>
       </div>
       <div class="modal-body">
-        <form action="" method="POST">
+        <form action="index.php" method="POST">
         <div class="form-group">
-        <label for=newPswdChangeInput">Old Password</label>
+        <label for="newPswdChangeInput">Old Password</label>
         <input type="password" name="OldPassword" class="form-control" id="newPswdChangeInput" placeholder="New Password" required="true" pattern="(?=^.{8,}$)(?=.*\d+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" maxlength="100">
         <small class="form-text text-muted">longer than 8 characters, needs to contain a capital letter and a number</small>
         </div>
         <div class="form-group">
-        <label for=newPswdChangeInput">New Password</label>
+        <label for="newPswdChangeInput">New Password</label>
         <input type="password" name="NewPassword" class="form-control" id="newPswdChangeInput" placeholder="New Password" required="true" pattern="(?=^.{8,}$)(?=.*\d+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" maxlength="100">
         <small class="form-text text-muted">longer than 8 characters, needs to contain a capital letter and a number</small>
         </div>
@@ -420,9 +421,9 @@ if(! isset($_SESSION['IsLogIn'])){
         </button>
       </div>
       <div class="modal-body">
-        <form action="" method="POST">
+        <form action="index.php" method="POST">
         <div class="form-group">
-        <label for=newUseranmeInput">New Username</label>
+        <label for="newUseranmeInput">New Username</label>
         <input name="username" type="text" class="form-control" id="newUseranmeInput" placeholder="New Username" maxlength="30" required="true" name="username" pattern="(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{6,}">
         <small class="form-text text-muted">longer than 6 characters,must contain a capital letter</small>
       </div>
