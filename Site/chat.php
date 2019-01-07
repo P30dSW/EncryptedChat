@@ -116,7 +116,7 @@ if(isset($_POST['submit'])){
                                 <div class="shadow dropdown-menu" aria-labelledby="UserDropdownMenuLink">
                                     <a class="dropdown-item" href="#" data-target="#pswdChangeMdl" data-toggle="modal" data-backdrop="static" data-keyboard="false">Change Password</a>
                                     <a class="dropdown-item" href="#" data-target="#changeusrnameMdl" data-toggle="modal" data-backdrop="static" data-keyboard="false">Change Username</a>
-                                    <form atrcion="" Method="POST">
+                                    <form action="chat.php" Method="POST">
                                     <input type="submit" value="Log Out" name="submit" class="dropdown-item">
                                     </form>
                                 </div>
@@ -212,7 +212,7 @@ if($user['uId'] != $_SESSION['uId'] && $user['uId'] != null){
       </div>
       <div class="modal-body">
         <!-- TODO: Action and Method -->
-        <form action="" method="POST">
+        <form action="chat.php" method="POST">
         <div class="form-group">
         <label for=oldPswdChangeInput">Old Password</label>
         <input type="password" name="OldPassword" class="form-control" id="oldPswdChangeInput" placeholder="New Password" required="true" pattern="(?=^.{8,}$)(?=.*\d+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" maxlength="100">
@@ -244,7 +244,7 @@ if($user['uId'] != $_SESSION['uId'] && $user['uId'] != null){
       </div>
       <div class="modal-body">
         <!-- TODO: Action and Method -->
-        <form action="" method="POST">
+        <form action="chat.php" method="POST">
         <!-- TODO: add verification patterns -->
         <div class="form-group">
         <label for=newUseranmeInput">New Username</label>
@@ -260,6 +260,7 @@ if($user['uId'] != $_SESSION['uId'] && $user['uId'] != null){
       </form>
     </div>
   
+</div>
 </div>
 <!-- edit message Modal
 TODO: goes through js. adds the mId in the modal attributes -->

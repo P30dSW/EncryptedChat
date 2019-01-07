@@ -23,7 +23,7 @@ $(document).ready(function () {
         userId = $("#sendMsg").attr("uId");
         if (userId == 0) {
             //TODO:add bootstrap alert
-            alert("Select a user first");
+            $("#errorsDiv").append("<div class='alert alert-danger alert-dismissible fade show' role='alert'>"+ "Error: Select a user first <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</sp</button</div>").slideDown("slow");
             return null;
         }
         sendMessageFromInput(userId, message);
