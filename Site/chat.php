@@ -66,6 +66,9 @@ if(isset($_POST['submit'])){
 ?>
 <html>
 <head>
+<meta charset="UTF-8">
+  <meta name="description" content="Let's Chat y'all!">
+  <meta name="keywords" content="Chat,GIBM">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Let's Chat! Chat Portal</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -79,7 +82,7 @@ if(isset($_POST['submit'])){
      <!-- Index Page, Where the LogIn and Register Forms are -->
         <a class="navbar-brand" href="index.php">Let's Chat!</a>
         <!-- Toggler for responsive solutions -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#CollapsableNavbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#CollapsableNavbarNav"  aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
               <!-- Navigation selections -->
@@ -248,7 +251,7 @@ if($user['uId'] != $_SESSION['uId'] && $user['uId'] != null){
         <!-- TODO: add verification patterns -->
         <div class="form-group">
         <label for=newUseranmeInput">New Username</label>
-        <input name="username" type="text" class="form-control" id="newUseranmeInput" placeholder="New Username" maxlength="30" required="true" name="username" pattern="(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{6,}">
+        <input name="username" type="text" class="form-control" id="newUseranmeInput" placeholder="New Username" maxlength="30" required="true" pattern="(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{6,}">
         <small class="form-text text-muted">longer than 6 characters,must contain a capital letter</small>
       </div>
       </div>

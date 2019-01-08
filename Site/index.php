@@ -184,6 +184,9 @@ switch($_POST['submit']) {
 ?>
 <html>
 <head>
+<meta charset="UTF-8">
+<meta name="description" content="Let's Chat y'all!">
+<meta name="keywords" content="Chat,GIBM">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="styles/index.css"/>
@@ -393,8 +396,8 @@ if(! isset($_SESSION['IsLogIn'])){
       <div class="modal-body">
         <form action="index.php" method="POST">
         <div class="form-group">
-        <label for="newPswdChangeInput">Old Password</label>
-        <input type="password" name="OldPassword" class="form-control" id="newPswdChangeInput" placeholder="New Password" required="true" pattern="(?=^.{8,}$)(?=.*\d+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" maxlength="100">
+        <label for="oldPswdChangeInput">Old Password</label>
+        <input type="password" name="OldPassword" class="form-control" id="oldPswdChangeInput" placeholder="New Password" required="true" pattern="(?=^.{8,}$)(?=.*\d+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" maxlength="100">
         <small class="form-text text-muted">longer than 8 characters, needs to contain a capital letter and a number</small>
         </div>
         <div class="form-group">
